@@ -9,6 +9,8 @@ import akka.actor.AllForOneStrategy
 import akka.actor.OneForOneStrategy
 import akka.dispatch.Resume
 
+//TODO Not ready yet, finish this test
+
 object Strategies {
   val oneForOne = new OneForOneStrategy(10, Duration.Inf)({
     case _: Exception             ⇒ Restart
