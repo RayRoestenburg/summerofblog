@@ -18,7 +18,6 @@ trait ExponentialBackOff extends SupervisorStrategy with ExponentialBackOffAlgor
         reset()
         Zero
     }
-    println("slept "+waited)
     super.handleFailure(context, child, cause, stats, children)
   }
 
