@@ -91,7 +91,7 @@ trait WebNode[Data,Request] extends Actor with Node {
 
   def after:Receive
 
-  def sendSpiders(ref: ActorRef, data: Data, msg: (Request,Spider), collected: Set[ActorRef]) {
+  def sendSpiders(spiderHome: ActorRef, data: Data, msg: (Request,Spider), collected: Set[ActorRef]) {
     val (request, spider) = msg
     val newTrail = spider.trail.copy(collected = collected + self)
     val newSpider = spider.copy(trail = newTrail)
@@ -100,10 +100,10 @@ trait WebNode[Data,Request] extends Actor with Node {
   }
 
   def handleRequest:Receive = {
-    case (req:Request, spider @ Spider(ref,WebTrail(collected, uuid))) if !lastId.exists(_ == uuid) =>
+    case (req:Request, spider @ Spider(home,WebTrail(collected, uuid))) if !lastId.exists(_ == uuid) =>
       lastId = Some(uuid)
       collect(req).map { data =>
-        sendSpiders(ref, data, (req,spider), collected)
+        sendSpiders(home, data, (req,spider), collected)
       }
   }
 }

@@ -12,8 +12,8 @@ trait Venom extends WebNode[Poisoned, KillSlowActors] {
 
   def now = System.currentTimeMillis()
 
-  override def sendSpiders(ref: ActorRef, data: Poisoned, msg: (KillSlowActors, Spider), collected: Set[ActorRef]) {
-    super.sendSpiders(ref, data, msg, collected)
+  override def sendSpiders(spiderHome: ActorRef, data: Poisoned, msg: (KillSlowActors, Spider), collected: Set[ActorRef]) {
+    super.sendSpiders(spiderHome, data, msg, collected)
     val (kill, _) = msg
     // the least you can do is phone home that the actor has been killed.
     kill.home ! Poisoned(self)

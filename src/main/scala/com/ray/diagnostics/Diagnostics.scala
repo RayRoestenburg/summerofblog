@@ -15,9 +15,9 @@ import akka.actor.{PoisonPill, ActorRef}
  */
 trait Diagnostics[Data, Request] extends WebNode[Data, Request] {
 
-  override def sendSpiders(ref: ActorRef, data: Data, msg: (Request, Spider), collected: Set[ActorRef]) {
-    ref ! DiagnosticData[Data](data, now, selfNode)
-    super.sendSpiders(ref, data, msg, collected)
+  override def sendSpiders(spiderHome: ActorRef, data: Data, msg: (Request, Spider), collected: Set[ActorRef]) {
+    spiderHome ! DiagnosticData[Data](data, now, selfNode)
+    super.sendSpiders(spiderHome, data, msg, collected)
   }
 
   override def before = diagnoseBefore
